@@ -1,16 +1,18 @@
-import {Table, Column, Model} from 'sequelize-typescript';
+import {Table, Column, Model, PrimaryKey} from 'sequelize-typescript';
  
 @Table
-export class DbOutlet extends Model<DbOutlet> {
+export default class DbOutlet extends Model<DbOutlet> {
+
+  @PrimaryKey
   @Column
   id: number;
+
+  @Column
+  client_id: number;
 
   @Column
   name: string;
 
   @Column
-  code: number;
- 
-  @Column
-  clientId: number;
+  code: string;
 }

@@ -52,6 +52,7 @@
     "node": ">=8.9"
   },
   "dependencies": {
+    "mysql2": "^1.6.5",
     "sequelize": "^5.12.1",
     "sequelize-typescript": "^1.0.0-beta.3",
     "sha.js": "^2.4.11",
@@ -68,6 +69,7 @@
     "nyc": "^14.1.1",
     "papaparse": "^5.0.1",
     "prettier": "^1.18.2",
+    "reflect-metadata": "^0.1.13",
     "roarr": "^2.13.3",
     "standard-version": "^6.0.1",
     "trash-cli": "^3.0.0",
