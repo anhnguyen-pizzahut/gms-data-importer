@@ -1,3 +1,3 @@
-# gms-data-importer
+# GMS Data Importer
 
-import data from ncr to gms
+Import data from ncr to gms
