@@ -14,10 +14,10 @@ export default class Mapper {
       Mapper.mapperType = type;
       switch (type) {
         case MapperType.CSVMapper:
-          Mapper.instance = TypedJSON;
+          Mapper.instance = parse;
           break;
         case MapperType.JSONMapper:
-          Mapper.instance = parse;
+          Mapper.instance = TypedJSON;
           break;
         case MapperType.XMLMapper:
           throw new Error('Unsupported');
