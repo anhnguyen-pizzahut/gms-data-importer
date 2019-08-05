@@ -1,5 +1,3 @@
-// import Papa from 'papaparse';
-// import { Readable } from 'stream';
 import axios from 'axios';
 import csv2json from 'csvjson-csv2json';
 
@@ -9,13 +7,6 @@ import { S3_BUCKET_URLS } from '../../configs';
 import Outlet from '../../models/raw/outlet';
 
 export default class DataParser {
-  // public static parseCSV(): DataParser {
-  //   // parse; Do some parsinghere
-  //   throw new Error('Unimplemented');
-  //   const serializer = new TypedJSON(Outlet);
-  //   const data = serializer.parseAsArray(json);
-  // }
-
   public static async getAndParseOutlets(): Promise<Outlet[]> {
     const csv = await axios.get(S3_BUCKET_URLS.IMPORT_OUTLETS);
     const results = csv2json(csv.data, { parseNumber: true }).map(outlet => {
