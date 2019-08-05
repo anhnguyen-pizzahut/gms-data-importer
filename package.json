@@ -52,6 +52,7 @@
     "node": ">=8.9"
   },
   "dependencies": {
+    "@types/uuid": "^3.4.5",
     "mysql2": "^1.6.5",
     "sequelize": "^5.12.1",
     "sequelize-typescript": "^1.0.0-beta.3",

@@ -3,21 +3,21 @@ import TypedJSON from 'typedjson';
 
 import { MapperType } from './mapper-type';
 
-export default class Mapper {
-  static instance: Mapper;
+export default class MapperParser {
+  static instance: MapperParser;
   static mapperType: MapperType;
 
   private constructor() { } // make constructor private
 
   public static create(type: MapperType): void {
-    if (!Mapper.instance) {
-      Mapper.mapperType = type;
+    if (!MapperParser.instance) {
+      MapperParser.mapperType = type;
       switch (type) {
         case MapperType.CSVMapper:
-          Mapper.instance = parse;
+            MapperParser.instance = parse;
           break;
         case MapperType.JSONMapper:
-          Mapper.instance = TypedJSON;
+            MapperParser.instance = TypedJSON;
           break;
         case MapperType.XMLMapper:
           throw new Error('Unsupported');
