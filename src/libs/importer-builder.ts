@@ -3,7 +3,7 @@ import Outlet from '../models/raw/outlet';
 
 import * as logger from './logger';
 
-import DataImporter from '../libs/importers/outlets-importer';
+import DataImporter from './importers/outlets';
 
 export function buildAndImport(identifier: DbMappable, data: Object[]) {
   logger.info('Building mapper object.');

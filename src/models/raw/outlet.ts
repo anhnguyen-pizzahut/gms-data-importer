@@ -4,7 +4,10 @@ import { jsonObject, jsonMember } from 'typedjson';
 export default class Outlet
 {
   @jsonMember
-  public clientId: number;
+  public zip: string;
+
+  @jsonMember
+  public client_id: number;
 
   @jsonMember
   public code: string;
@@ -43,10 +46,10 @@ export default class Outlet
   public disposition: string;
 
   @jsonMember
-  public minCart: string;
+  public min_cart: string;
 
   @jsonMember
-  public quoteTime: string;
+  public quote_time: string;
 
   @jsonMember
   public division: string;
@@ -55,37 +58,37 @@ export default class Outlet
   public customize: string;
 
   @jsonMember
-  public areaCode: string;
+  public area_code: string;
 
   @jsonMember
-  public ownerCode: string;
+  public owner_code: string;
 
   @jsonMember
-  public ownerName: string;
+  public owner_name: string;
 
   @jsonMember
-  public onlineOrder: boolean;
+  public online_order: boolean;
 
   @jsonMember
-  public offlineOrder: boolean;
+  public offline_order: boolean;
 
   @jsonMember
-  public alcoholDrinksAvailable: boolean;
+  public alcohol_drinks_available: boolean;
 
   @jsonMember
-  public paymentAccepted: string;
+  public payment_accepted: string;
 
   @jsonMember
-  public deliveryFee: number;
+  public delivery_fee: number;
 
   @jsonMember
-  public fromDate: Date;
+  public from_date: Date;
 
   @jsonMember
-  public toDate: Date;
+  public to_date: Date;
 
   @jsonMember
-  public isOpen: boolean;
+  public is_open: boolean;
 
   // This member is always defaulted to []
   // @jsonMember

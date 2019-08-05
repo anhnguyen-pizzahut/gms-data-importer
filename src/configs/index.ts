@@ -5,6 +5,10 @@ import * as config from './database';
  
 const sequelize =  new Sequelize(config.devConfigs);
 
-export default function initializeDatabaseConnection() {
+export function initializeDatabaseConnection() {
   return sequelize;
 };
+
+export const S3_BUCKET_URLS = {
+  IMPORT_OUTLETS: 'https://steve-phdv-releases.s3-ap-southeast-1.amazonaws.com/dumps/outlets-import.csv'
+}

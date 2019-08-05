@@ -1,8 +1,8 @@
-import { Table, Column, Model, PrimaryKey } from 'sequelize-typescript';
+import { Table, Column, Model, PrimaryKey, CreatedAt, UpdatedAt } from 'sequelize-typescript';
  
 @Table({
   tableName: 'outlets',
-  timestamps: false,
+  timestamps: true,
 })
 export default class DbOutlet extends Model<DbOutlet> {
 
@@ -20,6 +20,9 @@ export default class DbOutlet extends Model<DbOutlet> {
 
   @Column
   code: number;
+
+  @Column
+  zip: string;
 
   @Column
   uuid: string;
@@ -76,10 +79,10 @@ export default class DbOutlet extends Model<DbOutlet> {
   owner_name: string;
 
   @Column
-  online_order: boolean;
+  online_orders: boolean;
 
   @Column
-  offline_order: boolean;
+  offline_orders: boolean;
 
   @Column
   alcohol_drinks_available: boolean;
@@ -102,11 +105,15 @@ export default class DbOutlet extends Model<DbOutlet> {
   @Column
   aggregators: string;
 
-  // @CreatedAt
-  // @Column
-  // createdAt: Date;
+  @CreatedAt
+  @Column({
+    field: 'created_at'
+  })
+  createdAt: Date;
 
-  // @UpdatedAt
-  // @Column
-  // updatedAt: Date;
+  @UpdatedAt
+  @Column({
+    field: 'updated_at'
+  })
+  updatedAt: Date;
 }
