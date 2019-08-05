@@ -1,6 +1,6 @@
 import uuid from 'uuid';
 
-import { ImporterOperations } from './importer-operations';
+import { ImporterOperations } from './operations';
 
 import DbOutlet from '../../models/database/db-outlet';
 import Outlet from '../../models/raw/outlet';
