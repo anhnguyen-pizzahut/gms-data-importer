@@ -3,7 +3,7 @@ import uuid from 'uuid';
 import { ImporterOperations } from './operations';
 
 import DbOutlet from '../../models/database/db-outlet';
-import Outlet from '../../models/raw/outlet';
+import Outlet from '../../models/source/outlet';
 // import { formatNamedParameters, toDefaultValue } from 'sequelize/types/lib/utils';
 
 export default class OutletsImporter

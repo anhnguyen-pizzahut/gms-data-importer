@@ -4,7 +4,7 @@ import csv2json from 'csvjson-csv2json';
 // Data sources
 import { S3_BUCKET_URLS } from '../../configs';
 
-import Outlet from '../../models/raw/outlet';
+import Outlet from '../../models/source/outlet';
 
 export default class DataParser {
   public static async getAndParseOutlets(): Promise<Outlet[]> {

@@ -1,5 +1,5 @@
 import { DbMappable } from './importers/types';
-import Outlet from '../models/raw/outlet';
+import Outlet from '../models/source/outlet';
 
 import * as logger from './logger';
 
