@@ -15,12 +15,12 @@ var args = process.argv.slice(2);
 logger.info(`Commandline arguments ${JSON.stringify(args)}`);
 
 switch (args[0]) {
-case 'outlets':
-  logger.info('Building outlets importer.');
-  DataParser.getAndParseOutlets().then((outlets) => {
-    importerBuilder.buildAndImport(DbMappable.outlets, outlets);
-  });
-  break;
-default:
-  logger.warn('Importer is not ready for that processing type.');
+  case 'outlets':
+    logger.info('Building outlets importer.');
+    DataParser.getAndParseOutlets().then(outlets => {
+      importerBuilder.buildAndImport(DbMappable.outlets, outlets);
+    });
+    break;
+  default:
+    logger.warn('Importer is not ready for that processing type.');
 }

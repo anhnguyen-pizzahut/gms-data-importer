@@ -1,14 +1,20 @@
-import { Table, Column, Model, PrimaryKey, CreatedAt, UpdatedAt } from 'sequelize-typescript';
- 
+import {
+  Table,
+  Column,
+  Model,
+  PrimaryKey,
+  CreatedAt,
+  UpdatedAt
+} from 'sequelize-typescript';
+
 @Table({
   tableName: 'outlets',
-  timestamps: true,
+  timestamps: true
 })
 export default class DbOutlet extends Model<DbOutlet> {
-
   @PrimaryKey
   @Column({
-    autoIncrement: true,
+    autoIncrement: true
   })
   id: number;
 

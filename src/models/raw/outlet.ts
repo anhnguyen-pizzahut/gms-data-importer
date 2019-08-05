@@ -1,8 +1,7 @@
 import { jsonObject, jsonMember } from 'typedjson';
 
 @jsonObject
-export default class Outlet
-{
+export default class Outlet {
   @jsonMember
   public zip: string;
 

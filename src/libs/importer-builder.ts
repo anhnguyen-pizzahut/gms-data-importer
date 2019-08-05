@@ -9,7 +9,7 @@ export function buildAndImport(identifier: DbMappable, data: Object[]) {
   logger.info('Building mapper object.');
   try {
     if (data.length > 0) {
-      switch(identifier) {
+      switch (identifier) {
         case DbMappable.outlets:
           data.forEach((outlet: Outlet) => {
             DataImporter.getInstance().persist(outlet);
