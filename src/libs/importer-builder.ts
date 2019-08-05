@@ -1,20 +1,29 @@
-import { Mappable } from './constants';
+import { DbMappable } from './importers/types';
 import Outlet from '../models/raw/outlet';
 
 import * as logger from './logger';
 
 import DataImporter from '../libs/importers/outlets-importer';
 
-export function build(identifier: Mappable, source: Outlet[]) {
+export function buildAndImport(identifier: DbMappable, data: Object[]) {
   logger.info('Building mapper object.');
-  switch(identifier) {
-    case Mappable.outlets:
-      source.forEach((outlet: Outlet) => {
-        DataImporter.getInstance().persist(outlet);
-      });
-      break;
-    default:
-      logger.warn('No mapper found.');
-      return null;
+  try {
+    if (data.length > 0) {
+      switch(identifier) {
+        case DbMappable.outlets:
+          data.forEach((outlet: Outlet) => {
+            DataImporter.getInstance().persist(outlet);
+          });
+          return true;
+        default:
+          logger.warn('No mapper found.');
+          return false;
+      }
+    } else {
+      return false;
+    }
+  } catch (error) {
+    logger.warn(error);
+    return false;
   }
 }

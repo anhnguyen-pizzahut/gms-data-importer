@@ -4,7 +4,7 @@ import { ImporterOperations } from './importer-operations';
 
 import DbOutlet from '../../models/database/db-outlet';
 import Outlet from '../../models/raw/outlet';
-import { formatNamedParameters, toDefaultValue } from 'sequelize/types/lib/utils';
+// import { formatNamedParameters, toDefaultValue } from 'sequelize/types/lib/utils';
 
 export default class OutletsImporter implements ImporterOperations<Outlet, DbOutlet> {
   private static instance: OutletsImporter;
@@ -50,7 +50,7 @@ export default class OutletsImporter implements ImporterOperations<Outlet, DbOut
       offline_order: data.offlineOrder,
       alcohol_drinks_available: data.alcoholDrinksAvailable,
       payment_accepted: data.paymentAccepted,
-      delivery_fee: deliveryFee,
+      delivery_fee: data.deliveryFee,
       from_date: data.fromDate,
       to_date: data.toDate,
       is_open: data.isOpen,
