@@ -19,7 +19,10 @@ export default class OutletsImporter
   }
 
   private generateDedupeHash(data: Outlet) {
-    return crypto.createHash('md5').update(`${data.zip}_${data.code}_${data.name}`).digest('hex');
+    return crypto
+      .createHash('md5')
+      .update(`${data.zip}_${data.code}_${data.name}`)
+      .digest('hex');
   }
 
   private async checkIfOutletWasImported(data: DbOutlet) {
@@ -28,8 +31,8 @@ export default class OutletsImporter
       where: {
         aggregator_code: data.aggregator_code
       }
-    })
-    return check.length > 0
+    });
+    return check.length > 0;
   }
 
   public static getInstance(): OutletsImporter {
@@ -82,7 +85,7 @@ export default class OutletsImporter
   public async persist(data: Outlet): Promise<boolean> {
     try {
       const record = await this.parseAndProduce(data);
-      if (await this.checkIfOutletWasImported(record) === false) {
+      if ((await this.checkIfOutletWasImported(record)) === false) {
         const result = await record.save();
         data.opening_hours.forEach(async opening_hour => {
           opening_hour.outlet_id = result.dataValues.id;
@@ -90,7 +93,9 @@ export default class OutletsImporter
         });
         return true;
       } else {
-        logger.warn(`Skipping processing outlet ${data.code} since it was already imported.`);
+        logger.warn(
+          `Skipping processing outlet ${data.code} since it was already imported.`
+        );
         return false;
       }
     } catch (error) {
