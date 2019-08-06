@@ -12,6 +12,12 @@ import OutletOpeningHour from '../../models/source/outlet-opening-hour';
 import { OPENING_HOUR_MAPPED_ATTRIBUTES } from './constants';
 
 export default class DataParser {
+  private static isValidOutletHour(hourString: string): boolean {
+    return hourString
+      ? /^(2[0-4]|[01]\d):[0-5]\d:[0-5]\d$/g.test(hourString)
+      : false;
+  }
+
   private static parseOutletsOpeningHours(outlet: Outlet): OutletOpeningHour[] {
     const opening_hours = new Array<OutletOpeningHour>();
     OPENING_HOUR_MAPPED_ATTRIBUTES.forEach(attribute => {
@@ -19,8 +25,12 @@ export default class DataParser {
         client_id: outlet.client_id,
         active: true
       };
-      opening_hour.opening = outlet[attribute.fields[0]] || null;
-      opening_hour.closing = outlet[attribute.fields[1]] || null;
+      opening_hour.opening = this.isValidOutletHour(outlet[attribute.fields[0]])
+        ? outlet[attribute.fields[0]]
+        : null;
+      opening_hour.closing = this.isValidOutletHour(outlet[attribute.fields[1]])
+        ? outlet[attribute.fields[1]]
+        : null;
       opening_hour.day = attribute.day;
       opening_hours.push(opening_hour);
     });

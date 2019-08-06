@@ -1,12 +1,25 @@
 import { Sequelize } from 'sequelize-typescript';
-import * as config from './database';
+import * as db from './database';
 
 const GOOGLE_API_KEY = 'AIzaSyAWBctgbej54pi4S96uw0IpQRYOSC9hpT4';
 
-const sequelize = new Sequelize(config.devConfigs);
+function validateConnectionEnvironment(): boolean {
+  return (
+    process.env.MYSQL_HOST !== null &&
+    process.env.MYSQL_HOST !== undefined &&
+    (process.env.MYSQL_USERNAME !== null &&
+      process.env.MYSQL_USERNAME !== undefined) &&
+    (process.env.MYSQL_PASSWORD !== null &&
+      process.env.MYSQL_PASSWORD !== undefined)
+  );
+}
 
-export function initializeDatabaseConnection() {
-  return sequelize;
+export function initializeDatabaseConnection(database) {
+  if (validateConnectionEnvironment()) {
+    return new Sequelize(db.buildConnection(database));
+  } else {
+    throw new Error('Error reading connection parameters.');
+  }
 }
 
 export const S3_BUCKET_URLS = {

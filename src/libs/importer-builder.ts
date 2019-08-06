@@ -12,8 +12,17 @@ export function buildAndImport(identifier: DbMappable, data: Object[]) {
       switch (identifier) {
         case DbMappable.outlets:
           data.forEach(async (outlet: Promise<Outlet>) => {
-            // console.log(await outlet);
-            DataImporter.getInstance().persist(await outlet);
+            logger.info(
+              `Processing outlet ${
+                (await outlet).code
+              } at ${new Date().toUTCString()}`
+            );
+            await DataImporter.getInstance().persist(await outlet);
+            logger.info(
+              `Completed for outlet ${
+                (await outlet).code
+              } at ${new Date().toUTCString()}`
+            );
           });
           return true;
         default:
