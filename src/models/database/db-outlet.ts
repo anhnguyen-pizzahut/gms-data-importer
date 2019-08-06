@@ -114,6 +114,9 @@ export default class DbOutlet extends Model<DbOutlet> {
   @Column
   aggregators: string;
 
+  @Column
+  aggregator_code: string;
+
   @HasMany(() => DbOutletOpeningHour)
   opening_hours: DbOutletOpeningHour[];
 

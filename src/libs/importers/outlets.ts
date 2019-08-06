@@ -1,6 +1,8 @@
 import uuid from 'uuid';
+import crypto from 'crypto';
 
 import { ImporterOperations } from './operations';
+import * as logger from '../logger';
 
 import DbOutlet from '../../models/database/db-outlet';
 import Outlet from '../../models/source/outlet';
@@ -14,6 +16,20 @@ export default class OutletsImporter
 
   private getRandomCode(max: number): number {
     return Math.floor(Math.random() * Math.floor(max));
+  }
+
+  private generateDedupeHash(data: Outlet) {
+    return crypto.createHash('md5').update(`${data.zip}_${data.code}_${data.name}`).digest('hex');
+  }
+
+  private async checkIfOutletWasImported(data: DbOutlet) {
+    const check = await DbOutlet.findAll({
+      limit: 1,
+      where: {
+        aggregator_code: data.aggregator_code
+      }
+    })
+    return check.length > 0
   }
 
   public static getInstance(): OutletsImporter {
@@ -58,20 +74,25 @@ export default class OutletsImporter
       from_date: data.from_date || new Date(),
       to_date: data.to_date || new Date(2999, 11, 29),
       is_open: data.is_open || 1,
-      aggregators: '[]' // always empty by default
+      aggregators: '[]', // always empty by default
+      aggregator_code: this.generateDedupeHash(data)
     });
   }
 
   public async persist(data: Outlet): Promise<boolean> {
     try {
       const record = await this.parseAndProduce(data);
-      const result = await record.save();
-
-      data.opening_hours.forEach(async opening_hour => {
-        opening_hour.outlet_id = result.dataValues.id;
-        await OutletsOpeningHoursImporter.getInstance().persist(opening_hour);
-      });
-      return true;
+      if (await this.checkIfOutletWasImported(record) === false) {
+        const result = await record.save();
+        data.opening_hours.forEach(async opening_hour => {
+          opening_hour.outlet_id = result.dataValues.id;
+          await OutletsOpeningHoursImporter.getInstance().persist(opening_hour);
+        });
+        return true;
+      } else {
+        logger.warn(`Skipping processing outlet ${data.code} since it was already imported.`);
+        return false;
+      }
     } catch (error) {
       return false;
     }

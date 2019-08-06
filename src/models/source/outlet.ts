@@ -95,5 +95,8 @@ export default class Outlet {
   // public aggregators: string;
 
   @jsonMember
+  public aggregator_code: string;
+
+  @jsonMember
   public opening_hours: OutletOpeningHour[];
 }
