@@ -4,7 +4,7 @@ import { ImporterOperations } from './operations';
 
 import DbOutlet from '../../models/database/db-outlet';
 import Outlet from '../../models/source/outlet';
-// import { formatNamedParameters, toDefaultValue } from 'sequelize/types/lib/utils';
+import OutletsOpeningHoursImporter from './outlets-opening-hours';
 
 export default class OutletsImporter
   implements ImporterOperations<Outlet, DbOutlet> {
@@ -58,17 +58,22 @@ export default class OutletsImporter
       from_date: data.from_date || new Date(),
       to_date: data.to_date || new Date(2999, 11, 29),
       is_open: data.is_open || 1,
-      aggregators: '[]' // always empty by default
+      aggregators: '[]', // always empty by default
     });
   }
 
-  public async persist(data: Outlet): Promise<DbOutlet> {
+  public async persist(data: Outlet): Promise<boolean>{
     try {
-      const result = await this.parseAndProduce(data);
-      result.save();
-      return result;
+      const record = await this.parseAndProduce(data);
+      const result = await record.save();
+
+      data.opening_hours.forEach(async (opening_hour) => {
+        opening_hour.outlet_id = result.dataValues.id;
+        await OutletsOpeningHoursImporter.getInstance().persist(opening_hour);
+      })
+      return true;
     } catch (error) {
-      return null;
+      return false;
     }
   }
 }

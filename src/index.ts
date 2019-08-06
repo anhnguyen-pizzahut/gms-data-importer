@@ -17,8 +17,8 @@ logger.info(`Commandline arguments ${JSON.stringify(args)}`);
 switch (args[0]) {
   case 'outlets':
     logger.info('Building outlets importer.');
-    DataParser.getAndParseOutlets().then(outlets => {
-      // console.log(outlets);
+    DataParser.getAndParseOutlets().then(async outlets => {
+      // console.log(await outlets[0]);
       importerBuilder.buildAndImport(DbMappable.outlets, outlets)
     });
     break;

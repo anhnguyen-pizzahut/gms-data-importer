@@ -4,14 +4,18 @@ import {
   Model,
   PrimaryKey,
   CreatedAt,
-  UpdatedAt
+  UpdatedAt,
+  HasMany
 } from 'sequelize-typescript';
+
+import DbOutletOpeningHour from './db-outlet-opening-hours';
 
 @Table({
   tableName: 'outlets',
   timestamps: true
 })
 export default class DbOutlet extends Model<DbOutlet> {
+
   @PrimaryKey
   @Column({
     autoIncrement: true
@@ -110,6 +114,9 @@ export default class DbOutlet extends Model<DbOutlet> {
 
   @Column
   aggregators: string;
+
+  @HasMany(() => DbOutletOpeningHour)
+  opening_hours: DbOutletOpeningHour[]
 
   @CreatedAt
   @Column({

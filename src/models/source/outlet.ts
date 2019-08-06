@@ -1,4 +1,5 @@
 import { jsonObject, jsonMember } from 'typedjson';
+import OutletOpeningHour from './outlet-opening-hour';
 
 @jsonObject
 export default class Outlet {
@@ -92,4 +93,7 @@ export default class Outlet {
   // This member is always defaulted to []
   // @jsonMember
   // public aggregators: string;
+
+  @jsonMember
+  public opening_hours: OutletOpeningHour[];
 }
