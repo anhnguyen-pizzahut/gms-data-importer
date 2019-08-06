@@ -99,6 +99,9 @@ export default class OutletsImporter
         return false;
       }
     } catch (error) {
+      logger.warn(
+        `Error occurred ${error}.`
+      );
       return false;
     }
   }
