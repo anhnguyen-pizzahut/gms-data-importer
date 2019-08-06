@@ -18,7 +18,8 @@ switch (args[0]) {
   case 'outlets':
     logger.info('Building outlets importer.');
     DataParser.getAndParseOutlets().then(outlets => {
-      importerBuilder.buildAndImport(DbMappable.outlets, outlets);
+      // console.log(outlets);
+      importerBuilder.buildAndImport(DbMappable.outlets, outlets)
     });
     break;
   default:

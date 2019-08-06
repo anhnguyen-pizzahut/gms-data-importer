@@ -14,4 +14,4 @@ export const S3_BUCKET_URLS = {
     'https://steve-phdv-releases.s3-ap-southeast-1.amazonaws.com/dumps/outlets-import.csv'
 };
 
-export const GOOGLE_API_PLACES_FIND_FROM_TEXT_API = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input={0}&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=${GOOGLE_API_KEY}`;
+export const GOOGLE_API_PLACES_FIND_FROM_TEXT_API = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input={0}&inputtype=textquery&fields=formatted_address,geometry&key=${GOOGLE_API_KEY}`;

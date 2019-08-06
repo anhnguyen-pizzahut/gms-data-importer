@@ -24,30 +24,30 @@ export default class OutletsImporter
     }
   }
 
-  parseAndProduce(data: Outlet): DbOutlet {
+  async parseAndProduce(data: Outlet): Promise<DbOutlet> {
     return DbOutlet.build({
       client_id: data.client_id || 126,
-      name: data.name,
+      name: data.name || null,
       uuid: uuid(),
-      zip: data.zip,
+      zip: (data.zip && data.zip.length <= 10 ? data.zip.trim() : null),
       code: this.getRandomCode(9999),
-      description: data.description,
-      address: data.address,
-      street: data.street,
-      lat: data.lat,
-      long: data.long,
+      description: data.description || null,
+      address: data.address || null,
+      street: data.street || null,
+      lat: data.lat || null,
+      long: data.long || null,
       timezone: 'America/Sao_Paulo',
-      phone: data.phone,
-      tier: data.tier,
+      phone: data.phone || null,
+      tier: data.tier || null,
       active: true,
-      disposition: data.disposition,
-      min_cart: data.min_cart,
-      quote_time: data.quote_time,
-      division: data.division,
+      disposition: data.disposition || null,
+      min_cart: data.min_cart || null,
+      quote_time: data.quote_time || null,
+      division: data.division || null,
       customize: data.customize || '{"remarks":[{"value":null}]}',
       area_code: data.area_code || 'BC0111',
-      owner_code: data.owner_code,
-      owner_name: data.owner_name,
+      owner_code: data.owner_code || null,
+      owner_name: data.owner_name || null,
       online_orders: data.online_order || 1,
       offline_orders: data.offline_order || 1,
       alcohol_drinks_available: data.alcohol_drinks_available || 0,
@@ -63,7 +63,12 @@ export default class OutletsImporter
   }
 
   public async persist(data: Outlet): Promise<DbOutlet> {
-    const result = await this.parseAndProduce(data).save();
-    return result;
+    try {
+      const result = await this.parseAndProduce(data);
+      result.save();
+      return result;
+    } catch (error) {
+      return null;
+    }
   }
 }

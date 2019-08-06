@@ -11,8 +11,9 @@ export function buildAndImport(identifier: DbMappable, data: Object[]) {
     if (data.length > 0) {
       switch (identifier) {
         case DbMappable.outlets:
-          data.forEach((outlet: Outlet) => {
-            DataImporter.getInstance().persist(outlet);
+          data.forEach(async (outlet: Promise<Outlet>) => {
+            // console.log(await outlet);
+            DataImporter.getInstance().persist(await outlet);
           });
           return true;
         default:

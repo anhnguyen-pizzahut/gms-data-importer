@@ -4,12 +4,15 @@ import csv2json from 'csvjson-csv2json';
 // Data sources
 import { S3_BUCKET_URLS } from '../../configs';
 
+import { getLatLongFromAddress } from './utils';
+
 import Outlet from '../../models/source/outlet';
+import OutletGps from '../../models/source/outlet-gps';
 
 export default class DataParser {
   public static async getAndParseOutlets(): Promise<Outlet[]> {
     const csv = await axios.get(S3_BUCKET_URLS.IMPORT_OUTLETS);
-    const results = csv2json(csv.data, { parseNumber: true }).map(outlet => {
+    const results = csv2json(csv.data, { parseNumber: true }).map(async outlet => {
       outlet.name = JSON.stringify({
         en: outlet.name || '',
         pt: outlet.name || ''
@@ -33,8 +36,18 @@ export default class DataParser {
         pt: outlet.address_pt
       });
 
+      for (let i = 0; i < 5; i++) { // Retry if it fails to get lat/lng
+        const geolocationResponse = await getLatLongFromAddress(outlet.address_en);
+        if (geolocationResponse) {
+          const geolocation: OutletGps = new OutletGps(geolocationResponse.lat, geolocationResponse.lng);
+          outlet.lat = geolocation.lat;
+          outlet.long = geolocation.lng;
+          break;
+        }
+      }
+
       for (let attribute in outlet) {
-        if (outlet[attribute].length === 0) {
+        if (outlet[attribute] && outlet[attribute].length === 0) {
           outlet[attribute] = null;
         }
       }
