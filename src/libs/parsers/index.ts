@@ -9,18 +9,22 @@ import { getLatLongFromAddress } from './utils';
 import Outlet from '../../models/source/outlet';
 import OutletGps from '../../models/source/outlet-gps';
 import OutletOpeningHour from '../../models/source/outlet-opening-hour';
+import { OPENING_HOUR_MAPPED_ATTRIBUTES } from './constants';
 
 export default class DataParser {
   private static parseOutletsOpeningHours(outlet: Outlet): OutletOpeningHour[] {
-    return [
-      <OutletOpeningHour>{
+    const opening_hours = new Array<OutletOpeningHour>();
+    OPENING_HOUR_MAPPED_ATTRIBUTES.forEach(attribute => {
+      const opening_hour = <OutletOpeningHour>{
         client_id: outlet.client_id,
-        day: 'Mon',
-        opening: '11:00',
-        closing: '23:30',
         active: true
-      }
-    ];
+      };
+      opening_hour.opening = outlet[attribute.fields[0]] || null;
+      opening_hour.closing = outlet[attribute.fields[1]] || null;
+      opening_hour.day = attribute.day;
+      opening_hours.push(opening_hour);
+    });
+    return opening_hours;
   }
 
   public static async getAndParseOutlets(): Promise<Outlet[]> {
