@@ -15,7 +15,6 @@ import DbOutletOpeningHour from './db-outlet-opening-hours';
   timestamps: true
 })
 export default class DbOutlet extends Model<DbOutlet> {
-
   @PrimaryKey
   @Column({
     autoIncrement: true
@@ -116,7 +115,7 @@ export default class DbOutlet extends Model<DbOutlet> {
   aggregators: string;
 
   @HasMany(() => DbOutletOpeningHour)
-  opening_hours: DbOutletOpeningHour[]
+  opening_hours: DbOutletOpeningHour[];
 
   @CreatedAt
   @Column({

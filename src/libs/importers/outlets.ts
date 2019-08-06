@@ -29,7 +29,7 @@ export default class OutletsImporter
       client_id: data.client_id || 126,
       name: data.name || null,
       uuid: uuid(),
-      zip: (data.zip && data.zip.length <= 10 ? data.zip.trim() : null),
+      zip: data.zip && data.zip.length <= 10 ? data.zip.trim() : null,
       code: this.getRandomCode(9999),
       description: data.description || null,
       address: data.address || null,
@@ -58,19 +58,19 @@ export default class OutletsImporter
       from_date: data.from_date || new Date(),
       to_date: data.to_date || new Date(2999, 11, 29),
       is_open: data.is_open || 1,
-      aggregators: '[]', // always empty by default
+      aggregators: '[]' // always empty by default
     });
   }
 
-  public async persist(data: Outlet): Promise<boolean>{
+  public async persist(data: Outlet): Promise<boolean> {
     try {
       const record = await this.parseAndProduce(data);
       const result = await record.save();
 
-      data.opening_hours.forEach(async (opening_hour) => {
+      data.opening_hours.forEach(async opening_hour => {
         opening_hour.outlet_id = result.dataValues.id;
         await OutletsOpeningHoursImporter.getInstance().persist(opening_hour);
-      })
+      });
       return true;
     } catch (error) {
       return false;
