@@ -73,6 +73,9 @@ export default class DbOutlet extends Model<DbOutlet> {
   quote_time: string;
 
   @Column
+  duration: string;
+
+  @Column
   division: string;
 
   @Column

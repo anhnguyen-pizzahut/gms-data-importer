@@ -32,9 +32,9 @@ rl.question('Are you sure you would like to proceed? ', answer => {
   logger.info(`Commandline arguments ${JSON.stringify(args)}`);
 
   switch (args[0]) {
-    case 'outlet':
+    case 'import-outlet':
       logger.info(`Establishing access to database ${args[0]}`);
-      initializeDatabaseConnection(args[0].trim());
+      initializeDatabaseConnection('outlet');
       logger.info('Building outlets importer.');
       DataParser.getAndParseOutlets().then(async outlets => {
         logger.info(`Importing ${(await outlets).length}, please wait...`);
@@ -45,7 +45,8 @@ rl.question('Are you sure you would like to proceed? ', answer => {
     case 'sync-redis':
       logger.info('Commencing redis sync (defaulted to dev for now).');
       logger.info(`Job started at ${new Date().toUTCString()}`);
-      synchronizeRedis(args[1] === '-f' ? true : false).then(() => {
+      console.log(args);
+      synchronizeRedis(args[1] === 'force' ? true : false).then(() => {
         logger.info(`Job ended at ${new Date().toUTCString()}`);
       });
       break;

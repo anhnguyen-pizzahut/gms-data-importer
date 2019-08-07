@@ -44,6 +44,15 @@ export default class OutletsImporter
   }
 
   async parseAndProduce(data: Outlet): Promise<DbOutlet> {
+    const now = new Date(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      new Date().getDate(),
+      0,
+      0,
+      0
+    );
+    const yesterday = now.setDate(now.getDate() - 1);
     return DbOutlet.build({
       client_id: data.client_id || 126,
       name: data.name || null,
@@ -53,8 +62,8 @@ export default class OutletsImporter
       description: data.description || null,
       address: data.address || null,
       street: data.street || null,
-      lat: data.lat || null,
-      long: data.long || null,
+      lat: data.lat || 0,
+      long: data.long || 0,
       timezone: 'America/Sao_Paulo',
       phone: data.phone || null,
       tier: data.tier || null,
@@ -62,6 +71,7 @@ export default class OutletsImporter
       disposition: data.disposition || null,
       min_cart: data.min_cart || null,
       quote_time: data.quote_time || null,
+      duration: '{"C":10, "D":15}',
       division: data.division || null,
       customize: data.customize || '{"remarks":[{"value":null}]}',
       area_code: data.area_code || 'BC0111',
@@ -74,7 +84,7 @@ export default class OutletsImporter
         data.payment_accepted ||
         '{"cash":{"active":1,"min":0,"max":9999999999},"credit_card":{"active":1,"min":0,"max":9999999999},"credit_card_online":{"active":1,"min":0,"max":9999999999}}',
       delivery_fee: data.delivery_fee || 0,
-      from_date: data.from_date || new Date(),
+      from_date: data.from_date || yesterday, // Move to yesterday to enable localization
       to_date: data.to_date || new Date(2999, 11, 29),
       is_open: data.is_open || 1,
       aggregators: '[]', // always empty by default

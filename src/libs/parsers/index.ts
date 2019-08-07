@@ -20,6 +20,13 @@ export default class DataParser {
 
   private static parseOutletsOpeningHours(outlet: Outlet): OutletOpeningHour[] {
     const opening_hours = new Array<OutletOpeningHour>();
+    opening_hours.push(<OutletOpeningHour>{
+      client_id: outlet.client_id,
+      day: 'Pub',
+      opening: '00:00:00',
+      closing: '23:59:00',
+      active: true
+    });
     OPENING_HOUR_MAPPED_ATTRIBUTES.forEach(attribute => {
       const opening_hour = <OutletOpeningHour>{
         client_id: outlet.client_id,
@@ -56,9 +63,9 @@ export default class DataParser {
               : null;
         }
         outlet.disposition = `["${outlet.disposition.split('|').join(',')}"]`;
-        outlet.min_cart = `{"${outlet.min_cart.split('|').join(',')}"}`;
-        outlet.quote_time = `{"${outlet.quote_time.split('|').join(',')}"}`;
-        outlet.division = `{"${outlet.division.split('|').join(',')}"}`;
+        outlet.min_cart = `{"${outlet.min_cart.split('|').join(',')}}`;
+        outlet.quote_time = `{"${outlet.quote_time.split('|').join(',')}}`;
+        outlet.division = `{"${outlet.division.split('|').join(',')}}`;
         outlet.address = JSON.stringify({
           en: outlet.address_en,
           pt: outlet.address_pt
