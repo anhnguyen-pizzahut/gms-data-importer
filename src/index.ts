@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import * as logger from './libs/logger';
 import readline from 'readline';
 import * as importerBuilder from './libs/importer-builder';
+import { synchronizeRedis } from './libs/opening-hours-redis-sync';
 
 import { DbMappable } from './libs/importers/types';
 import { initializeDatabaseConnection } from './configs';
@@ -41,8 +42,12 @@ rl.question('Are you sure you would like to proceed? ', answer => {
         importerBuilder.buildAndImport(DbMappable.outlets, outlets);
       });
       break;
-    case 'sync-redis-outlets-opening-hours':
-      logger.warn('TODO: To be implemented soon.');
+    case 'sync-redis':
+      logger.info('Commencing redis sync (defaulted to dev for now).');
+      logger.info(`Job started at ${new Date().toUTCString()}`);
+      synchronizeRedis(args[1] === '-f' ? true : false).then(() => {
+        logger.info(`Job ended at ${new Date().toUTCString()}`);
+      });
       break;
     default:
       logger.warn('Importer is not ready for that processing type.');
