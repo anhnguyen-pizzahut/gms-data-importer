@@ -58,7 +58,7 @@ export default class OutletsImporter
       name: data.name || null,
       uuid: uuid(),
       zip: data.zip && data.zip.length <= 10 ? data.zip.trim() : null,
-      code: this.getRandomCode(9999),
+      code: data.code || null,
       description: data.description || null,
       address: data.address || null,
       street: data.street || null,
