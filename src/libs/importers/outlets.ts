@@ -14,10 +14,6 @@ export default class OutletsImporter
 
   private constructor() {}
 
-  private getRandomCode(max: number): number {
-    return Math.floor(Math.random() * Math.floor(max));
-  }
-
   private generateDedupeHash(data: Outlet) {
     return crypto
       .createHash('md5')
