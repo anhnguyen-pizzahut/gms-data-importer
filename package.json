@@ -75,7 +75,7 @@
     "prettier": "^1.18.2",
     "reflect-metadata": "^0.1.13",
     "roarr": "^2.13.3",
-    "standard-version": "^6.0.1",
+    "standard-version": "^8.0.1",
     "trash-cli": "^3.0.0",
     "tslint": "^5.18.0",
     "tslint-config-prettier": "^1.18.0",
